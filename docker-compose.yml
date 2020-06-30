@@ -1,0 +1,36 @@
+version: '2'
+services:
+    web:
+        container_name: nginx
+        image: nginx:latest
+        ports:
+            - "8000:80"
+        volumes:
+            - .:/var/www/app
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d
+        links:
+            - php
+    php:
+        container_name: php7
+        build:
+            context: ./docker/php
+            dockerfile: Dockerfile
+        volumes:
+            - .:/var/www/app
+            - ./storage/app:/var/www/app/storage/app
+        links:
+            - mysql
+    mysql:
+        container_name: mysql
+        image: mysql:5.7
+        volumes:
+            - ./mysql:/var/lib/mysql
+        extra_hosts:
+            - "mysql.lo:127.0.0.1"
+        ports:
+         - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: blog
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
