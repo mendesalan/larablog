@@ -15,9 +15,9 @@ class Post extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->timestamps();
         });
 

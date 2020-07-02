@@ -3,19 +3,26 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12 container">
+
             <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
+                <br>
+                <a href="/create" class="home__newPost">Create a New Post!</a>
+                <br>
+                @if(auth()->user()->is_admin == true)
+                    <a href="/api/import" class="home__newPost">Import Posts!</a>
+                @endif
+                <br>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Dashboard - Your Posts</div>
+                <br>
+                <Post
+                    :posts="{{ $posts }}"
+                    :can-edit="true"
+                ></Post>
             </div>
         </div>
     </div>
